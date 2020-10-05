@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { withTheme, Manager } from "@twilio/flex-ui";
 import addressBookService from "../../helpers/AddressBookService";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -25,11 +24,7 @@ class AddressBookSelect extends React.Component {
 
   async getContactList() {
     this.setState({ loading: true });
-    const res = await addressBookService.getAddressBookContacts({
-      isAgeUk: this.props.isAgeUk,
-      teams: this.props.teams,
-      isAdmin: this.props.isAdmin,
-    });
+    const res = await addressBookService.getAddressBookContacts(this.props.isAgeUk);
     if (!this.mounted) {
       return;
     }
@@ -120,11 +115,4 @@ class AddressBookSelect extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    teams: state.flex.worker.attributes.team,
-    isAdmin: state.flex.worker.attributes.roles.includes("admin"),
-  };
-};
-
-export default connect(mapStateToProps)(withTheme(AddressBookSelect));
+export default withTheme(AddressBookSelect);

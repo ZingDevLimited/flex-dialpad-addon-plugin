@@ -66,9 +66,11 @@ const callApi = async (
 
 class AddressBookService {
   
- async getAddressBookContacts(model) {
+ async getAddressBookContacts(isAgeUK) {
     return callApi(
-      "POST", "GetAddressBookContacts", undefined, model, false
+      "GET", "GetAddressBookContacts", new URLSearchParams({
+        isAgeUK
+      })
     );
   }
 }
