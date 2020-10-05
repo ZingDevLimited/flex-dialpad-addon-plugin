@@ -6,12 +6,35 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import TextField from '@material-ui/core/TextField';
 import ConferenceService from '../../helpers/ConferenceService';
+import AddressBookSelect from '../AddressBook/AddressBookSelect';
+import PhoneNumberField from './PhoneNumberField';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
+  },
+  label: {
+    fontSize: `16px`,
+  },
+});
 
 class ConferenceDialog extends React.Component {
   state = {
-    conferenceTo: ''
+    conferenceTo: '',
+    radioSelection: 'phoneNumber',
   }
 
   handleClose = () => {
@@ -25,19 +48,9 @@ class ConferenceDialog extends React.Component {
     });
   }
 
-  handleKeyPress = e => {
-    const key = e.key;
-
-    if (key === 'Enter') {
-      this.addConferenceParticipant();
-      this.closeDialog();
-    }
-  }
-
-  handleChange = e => {
-    const value = e.target.value;
-    this.setState({ conferenceTo: value });
-  }
+  handleRadioChange = event => {
+    this.setState({ radioSelection: event.target.value });
+  };
 
   handleDialButton = () => {
     this.addConferenceParticipant();
@@ -74,27 +87,69 @@ class ConferenceDialog extends React.Component {
     }
     this.setState({ conferenceTo: '' });
   }
+  
+  async onNumberSelected(phoneNumber) {
+    if(phoneNumber){
+      await this.setState({conferenceTo :phoneNumber});
+    }
+  }
 
   render() {
     return (
       <Dialog
         open={this.props.isOpen}
         onClose={this.handleClose}
+        fullWidth
+        maxWidth="md"
       >
         <DialogContent>
           <DialogContentText>
-            {Manager.getInstance().strings.DIALPADExternalTransferPhoneNumberPopupHeader}
+            {Manager.getInstance().strings.DIALPADExternalTransferPopupHeader}
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="conferenceNumber"
-            label={Manager.getInstance().strings.DIALPADExternalTransferPhoneNumberPopupTitle}
-            fullWidth
-            value={this.state.conferenceTo}
-            onKeyPress={this.handleKeyPress}
-            onChange={this.handleChange}
-          />
+          <Grid container>
+            <Grid item xs={6}>
+              <FormControl component="fieldset">
+              <RadioGroup
+                aria-label="Call Transfer"
+                name="transfer"
+                value={this.state.radioSelection}
+                onChange={this.handleRadioChange}
+              >
+                <FormControlLabel value="phoneNumber" control={<Radio />} label="Phone Number" key="phoneNumber" />
+                <FormControlLabel value="localDirectory" control={<Radio />} label="Age UK Local Branches" key="localDirectory" />
+                <FormControlLabel value="addressBook" control={<Radio />} label="Address Book" key="addressBook" />
+              </RadioGroup>
+            </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              {
+                this.state.radioSelection === "phoneNumber" && (
+                  <PhoneNumberField 
+                    key="phoneNumber" 
+                    onNumberSelected={(e) => this.onNumberSelected(e)} 
+                  />
+                )
+              }
+              {
+                this.state.radioSelection === "localDirectory" && (
+                  <AddressBookSelect
+                    key="addressBookSelect-local"
+                    isAgeUk={true}
+                    onNumberSelected={(e) => this.onNumberSelected(e)} 
+                  />
+                )
+              }
+              {
+                this.state.radioSelection === "addressBook" && (
+                  <AddressBookSelect
+                    key="addressBookSelect"
+                    isAgeUk={false}
+                    onNumberSelected={(e) => this.onNumberSelected(e)} 
+                  />
+                )
+              }
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button
@@ -125,4 +180,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withTheme(withTaskContext(ConferenceDialog)));
+export default connect(mapStateToProps)(withTheme(withTaskContext(withStyles(styles)(ConferenceDialog))));
