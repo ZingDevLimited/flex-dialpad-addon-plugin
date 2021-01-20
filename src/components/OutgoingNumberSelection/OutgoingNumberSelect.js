@@ -110,7 +110,6 @@ class OutgoingNumberSelect extends React.Component {
                         onChange={this.handleChange}
                         value={this.props.selectedOutgoingNumber}
                         isSearchable={true}
-                        isClearable={true}
                         name="outgoingNumberSelection"
                         filterOption={this.customFilter}
                         getOptionValue={(option) => option["phoneNumber"]}

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   addressBookSelectContent: {
-    marginTop: "30px",
+    marginTop: "15px",
   },
   dialButtonContent: {
     display: "flex",
@@ -27,6 +27,9 @@ const styles = (theme) => ({
     borderRadius: " 100px",
     padding: "8px",
     marginTop: "20px",
+    "&:hover": {
+      backgroundImage: "linear-gradient(to top, rgb(25, 118, 210), rgb(25, 118, 210))",
+    },
   },
 });
 
@@ -76,7 +79,7 @@ class AddressBookSelectDial extends React.Component {
 
 const mapStateToProps = state => {
   return {
-      outgoingNumber: state.dialpad.outgoingNumber.selectedOutgoingNumber?.phoneNumber,
+    outgoingNumber: state.dialpad.outgoingNumber.selectedOutgoingNumber?.phoneNumber,
   }
 };
 
