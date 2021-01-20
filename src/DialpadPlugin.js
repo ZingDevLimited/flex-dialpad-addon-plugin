@@ -6,6 +6,7 @@ import registerCustomActions from './customActions';
 import { loadExternalTransferInterface } from './components/ExternalTransfer';
 import { loadInternalCallInterface } from './components/InternalCall';
 import { loadAddressBookInterface } from './components/AddressBook';
+import { loadOutgoingNumberSelectionInterface } from './components/OutgoingNumberSelection';
 
 const PLUGIN_NAME = 'DialpadPlugin';
 
@@ -21,6 +22,8 @@ export default class DialpadPlugin extends FlexPlugin {
     loadInternalCallInterface.bind(this)(flex, manager)
 
     loadAddressBookInterface.bind(this)(flex, manager)
+
+    loadOutgoingNumberSelectionInterface.bind(this)(flex, manager)
 
     registerCustomActions(manager);
 

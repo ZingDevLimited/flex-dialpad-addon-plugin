@@ -51,7 +51,24 @@ const sharedTheme = (theme) => ({
       borderRadius: '100px',
       padding: '10px',
       minWidth: '0px'
-    }
+    },
+    selectWrapper: {
+      width: "100%",
+      paddingTop: "10px"
+    },
+    loadingWrapper: {
+      textAlign: "center",
+    },
+    selectionLabel: {
+      display: "block",
+      textTransform: "uppercase",
+      fontSize: "10px",
+      lineHeight: 1.6,
+      letterSpacing: "2px",
+      marginTop: "3px",
+      marginBottom: "8px",
+      paddingTop: "0px",
+    },
   })
   
 export default sharedTheme

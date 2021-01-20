@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { IconButton, Icon, Manager, Actions } from "@twilio/flex-ui";
 import AddressBookSelectDial from "../AddressBook/AddressBookSelectDial";
 import { withStyles } from "@material-ui/core/styles";
+import OutgoingNumberSelect from "../OutgoingNumberSelection/OutgoingNumberSelect";
 
 const styles = (theme) => ({
   addressBookSidePanel: {
@@ -126,19 +127,20 @@ class AddressBookDialog extends React.Component {
                     </span>
                   </div>
                 ) : (
-                  <div className={classes.addressBookSidePanelAvailable}>
-                    <AddressBookSelectDial
-                      key="addressBookSelectDial-ageUKLocal"
-                      isAgeUk={true}
-                      onPhoneNumberDial={this.onPhoneNumberDial}
-                    ></AddressBookSelectDial>
-                    <AddressBookSelectDial
-                      key="addressBookSelectDial-addressBook"
-                      isAgeUk={false}
-                      onPhoneNumberDial={this.onPhoneNumberDial}
-                    ></AddressBookSelectDial>
-                  </div>
-                )}
+                    <div className={classes.addressBookSidePanelAvailable}>
+                      <OutgoingNumberSelect key="address-book-outgoing-number-select" />
+                      <AddressBookSelectDial
+                        key="addressBookSelectDial-ageUKLocal"
+                        isAgeUk={true}
+                        onPhoneNumberDial={this.onPhoneNumberDial}
+                      ></AddressBookSelectDial>
+                      <AddressBookSelectDial
+                        key="addressBookSelectDial-addressBook"
+                        isAgeUk={false}
+                        onPhoneNumberDial={this.onPhoneNumberDial}
+                      ></AddressBookSelectDial>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
