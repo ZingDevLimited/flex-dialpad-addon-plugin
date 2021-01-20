@@ -2,7 +2,6 @@ import * as React from "react";
 import { IconButton } from "@twilio/flex-ui";
 import AddressBookSelect from "../AddressBook/AddressBookSelect";
 import { withStyles } from "@material-ui/core/styles";
-import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   addressBookSelectContent: {
@@ -67,7 +66,7 @@ class AddressBookSelectDial extends React.Component {
           <IconButton
             className={classes.dialButton}
             icon="Call"
-            disabled={!(this.state.isPhoneNumberSelected && this.props.outgoingNumber)}
+            disabled={!this.state.isPhoneNumberSelected}
             title="Call"
             onClick={() => this.onPhoneNumberDial()}
           ></IconButton>
@@ -77,10 +76,4 @@ class AddressBookSelectDial extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    outgoingNumber: state.dialpad.outgoingNumber.selectedOutgoingNumber?.phoneNumber,
-  }
-};
-
-export default connect(mapStateToProps)(withStyles(styles)(AddressBookSelectDial));
+export default withStyles(styles)(AddressBookSelectDial);
