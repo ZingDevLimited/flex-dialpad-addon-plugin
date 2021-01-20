@@ -103,4 +103,11 @@ export default (manager) => {
     
   })
 
+  //Customize the Outbound Call Action
+  Actions.replaceAction("StartOutboundCall", (payload, original) => {
+    const state = manager.store.getState();
+    var newPayload = payload;
+    newPayload.callerId = state.dialpad.outgoingNumber.selectedOutgoingNumber?.phoneNumber;
+    original(newPayload);
+  });
 }

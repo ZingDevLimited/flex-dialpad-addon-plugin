@@ -11,18 +11,18 @@ const callApi = async (
       Authorization: `Bearer ${
         Manager.getInstance().store.getState().flex.session.ssoTokenPayload
           .token
-      }`,
+        }`,
     };
 
     let body = undefined;
     const url = `${process.env.REACT_APP_API_BASE_URL}/flex/${route}${
       urlParams ? "?" + urlParams.toString() : ""
-    }`;
+      }`;
     if (requestData) {
       if (method === "GET") {
         return {
           statusCode: 0,
-          error: "Invalid request, GET requests cannont have a body",
+          error: "Invalid request, GET requests cannot have a body",
         };
       }
       headers["Content-Type"] = "application/json";
@@ -64,16 +64,22 @@ const callApi = async (
   }
 };
 
-class AddressBookService {
-  
- async getAddressBookContacts(isAgeUK) {
+class FlexService {
+
+  async getAddressBookContacts(isAgeUK) {
     return callApi(
       "GET", "GetAddressBookContacts", new URLSearchParams({
         isAgeUK
       })
     );
   }
+
+  async getOutgoingNumbers() {
+    return callApi(
+      "GET", "GetPhoneNumbers"
+    );
+  }
 }
 
-const addressBookService = new AddressBookService();
-export default addressBookService;
+const flexService = new FlexService();
+export default flexService;
