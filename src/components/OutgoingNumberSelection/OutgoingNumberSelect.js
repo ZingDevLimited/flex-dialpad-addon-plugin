@@ -16,9 +16,10 @@ class OutgoingNumberSelect extends React.Component {
 
   async componentDidMount() {
     this.mounted = true;
-    if (!this.props.isFetched) {
+    //Should always get outgoingnumber list, as agents skills may change 
+    //if (!this.props.isFetched) { 
       await this.getOutgoingNumberList();
-    }
+    //}
   }
 
   componentWillUnmount() {
@@ -98,7 +99,7 @@ class OutgoingNumberSelect extends React.Component {
         ) : (
               <>
                 {
-                  this.props.outgoingNumbers?.length > 1 && (
+                  this.props.outgoingNumbers?.length > 0 && (
                     <>
                       <p className={classes.selectionLabel}>
                         {Manager.getInstance().strings.OutgoingNumberSelectionLabel}
